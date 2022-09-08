@@ -1,5 +1,5 @@
 resource "aws_cognito_identity_provider" "idp" {
-  count = length(var.identity_providers) ? length(var.identity_providers) : 0
+  count = length(var.identity_providers)
 
   user_pool_id  = join("", aws_cognito_user_pool.pool.*.id)
   idp_name = lookup(element(var.identity_providers, count.index), "idp_name")
