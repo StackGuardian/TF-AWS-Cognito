@@ -1,5 +1,5 @@
 resource "aws_cognito_resource_server" "resource_server" {
-  for_each     = var.module_enabled ? { for resource in var.resource_servers : resource.identifier => resource } : {}
+  for_each     = {for resource in var.resource_servers : resource.identifier => resource }
   identifier   = each.value.identifier
   name         = try(each.value.name, null)
   user_pool_id = aws_cognito_user_pool.user_pool[0].id
