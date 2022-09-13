@@ -1,551 +1,531 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "type": "object",
-    "properties": {
-      "name": {
-        "type": "string",
-        "description": "(Required) The name of the user pool.",
-        "default": "SG-user-pool"
-      },
-      "password_minimum_length":{
-        "description": "(Recommended) The minimum length of the password policy that you have set.",
-        "type":"number",
-        "default":20
-      },
-      "temporary_password_validity_days":{
-        "type":"number",
-        "default":1
-      },
-      "allow_software_mfa_token":{
-        "type":"boolean",
-        "default":"True"
-      },
-      "password_require_numbers":{
-        "description": "(Recommended) Whether you have required users to use at least one number in their password.",
-        "type":"boolean",
-        "default":"True"
-      },
-      "password_require_symbols":{
-        "description": "(Recommended) Whether you have required users to use at least one symbol in their password.",
-        "type":"boolean",
-        "default":"True"
-      },
-      "password_require_uppercase":{
-        "type":"boolean",
-        "default":"True"
-      },
-
-      "password_require_lowercase":{
-        "description": "(Optional) Whether you have required users to use at least one lowercase letter in their password",
-        "type":"boolean",
-        "default":"True"
-      },
-      "advanced_security_mode": {
-        "type": "string",
-        "description": "(Optional) The mode for advanced security, must be one of `OFF`, `AUDIT` or `ENFORCED`. Additional pricing applies for Amazon Cognito advanced security features. For details see https://aws.amazon.com/cognito/pricing",
-        "enum": [
-          "OFF",
-          "AUDIT",
-          "ENFORCED"
-        ]
-      },
-
-      "identity_providers":{
-        "type":"object",
-        "properties": {
-          
-          "povider_name":{
-            "type":"string",
-            "default":null
-          },
-          "provider_type":{
-            "type":"string",
-            "enum":[
-              "SAML",
-              "Facebook",
-              "Google",
-              "LoginWithAmazon",
-              "SignInWithApple",
-              "OIDC"
-            ],
-            "default":null
-          }
-        }
-      
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "(Required) The name of the user pool.",
+      "default": "SG-user-pool"
     },
-
-      "alias_attributes": {
-        "type": "array",
-        "description": "(Optional) Attributes supported as an alias for this user pool. Possible values: 'phone_number', 'email', or 'preferred_username'. Conflicts with username_attributes.",
-        "items": {
+    "password_minimum_length": {
+      "description": "(Recommended) The minimum length of the password policy that you have set.",
+      "type": "number",
+      "default": 20
+    },
+    "temporary_password_validity_days": {
+      "type": "number",
+      "default": 1
+    },
+    "allow_software_mfa_token": {
+      "type": "boolean",
+      "enum": [
+        true,
+        false
+      ],
+      "default": true
+    },
+    "password_require_numbers": {
+      "description": "(Recommended) Whether you have required users to use at least one number in their password.",
+      "type": "boolean",
+      "default": true,
+      "enum": [
+        true,
+        false
+      ]
+    },
+    "password_require_symbols": {
+      "description": "(Recommended) Whether you have required users to use at least one symbol in their password.",
+      "type": "boolean",
+      "default": true,
+      "enum": [
+        true,
+        false
+      ]
+    },
+    "password_require_uppercase": {
+      "type": "boolean",
+      "default": true,
+      "enum": [
+        true,
+        false
+      ]
+    },
+    "password_require_lowercase": {
+      "description": "(Optional) Whether you have required users to use at least one lowercase letter in their password",
+      "type": "boolean",
+      "default": true,
+      "enum": [
+        true,
+        false
+      ]
+    },
+    "advanced_security_mode": {
+      "type": "string",
+      "description": "(Optional) The mode for advanced security, must be one of `OFF`, `AUDIT` or `ENFORCED`. Additional pricing applies for Amazon Cognito advanced security features. For details see https://aws.amazon.com/cognito/pricing",
+      "enum": [
+        "OFF",
+        "AUDIT",
+        "ENFORCED"
+      ],
+      "default":"OFF"
+    },
+    "identity_providers": {
+      "type": "object",
+      "properties": {
+        "povider_name": {
+          "type": "string",
+          "default": ""
+        },
+        "provider_type": {
           "type": "string",
           "enum": [
-            "phone_number",
-            "preferred_username",
-            "email"
+            "SAML",
+            "Facebook",
+            "Google",
+            "LoginWithAmazon",
+            "SignInWithApple",
+            "OIDC"
           ]
         }
-      },
-      "username_attributes": {
-        "type": "array",
-        "description": "(Optional) Specifies whether email addresses or phone numbers can be specified as usernames when a user signs up. Conflicts with alias_attributes.",
-        "items": {
-          "type": "string",
-          "enum": [
-            "phone_number",
-            "email"
-          ]
-        }
-      },
-      "allow_admin_create_user_only": {
-        "type": "boolean",
-        "title": "Only Admins can create users",
-        "description": "(Optional) Set to True if only the administrator is allowed to create user profiles. Set to False if users can sign themselves up via an app.",
-        "default": "True",
+      }
+    },
+    "alias_attributes": {
+      "type": "array",
+      "description": "(Optional) Attributes supported as an alias for this user pool. Possible values: 'phone_number', 'email', or 'preferred_username'. Conflicts with username_attributes.",
+      "items": {
+        "type": "string",
         "enum": [
-          true,
-          false
+          "phone_number",
+          "preferred_username",
+          "email"
         ]
-      },
-      "enable_resource_server": {
-        "type": "boolean",
-        "title": "Create a resource Server",
-        "description": "Enables you to create a resource server",
-        "default": "True",
+      }
+    },
+    "username_attributes": {
+      "type": "array",
+      "description": "(Optional) Specifies whether email addresses or phone numbers can be specified as usernames when a user signs up. Conflicts with alias_attributes.",
+      "items": {
+        "type": "string",
         "enum": [
-          true,
-          false
+          "phone_number",
+          "email"
         ]
-      },
-      "resource_servers": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "identifier": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "scopes": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "scope_name ": {
-                    "type": "string"
-                  },
-                  "scope_description": {
-                    "type": "string"
-                  }
+      }
+    },
+    "allow_admin_create_user_only": {
+      "type": "boolean",
+      "title": "Only Admins can create users",
+      "description": "(Optional) Set to True if only the administrator is allowed to create user profiles. Set to False if users can sign themselves up via an app.",
+      "default": true,
+      "enum": [
+        true,
+        false
+      ]
+    },
+    "enable_resource_server": {
+      "type": "boolean",
+      "title": "Create a resource Server",
+      "description": "Enables you to create a resource server",
+      "default": true,
+      "enum": [
+        true,
+        false
+      ]
+    },
+    "resource_servers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "scope_name ": {
+                  "type": "string"
+                },
+                "scope_description": {
+                  "type": "string"
                 }
               }
             }
           }
         }
-      },
-      "clients": {
-        "type": "array",
-        "items": 
-          {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "read_attributes": {
-                "type": "string",
-                "enum": [
-                  "email",
-                  "email_verified",
-                  "preferred_username"
-                ],
-                "default":null
-              },
-              "allowed_oauth_scopes": {
-                "title": "Allowed client oauth scope",
-                "description": "(Optional) List of allowed OAuth scopes. Possible values are 'phone', 'email', 'openid', 'profile', and 'aws.cognito.signin.user.admin'",
-                "type":"array",
-                "items": {
-                    "type":"string",
-                    "enum": [
-                        "phone",
-                        "emaill",
-                        "openid",
-                        "profile",
-                        "aws.cognito.signin.user.admin"
-                    ]
-                }
-              },
-              "allowed_oauth_flows": {
-                "title": "Allowed client oauth flows",
-                "description": "(Optional) List of allowed OAuth flows. Possible flows are 'code', 'implicit', and 'client_credentials'.",
-                "type":"array",
-                "items": {
-                  "type":"string",
-                  "enum": [
-                    "code",
-                    "implicit",
-                    "client_credentials"
-                    ]
-                }
-              },
-              "allowed_oauth_flows_user_pool_client":{
-                "type":"boolean",
-                "default":"false"
-              },
-              "callback_urls": {
-                "type": "array",
-                "items": 
-                  {
-                    "type": "string",
-                    "default": null
-                  }
-              },
-              "default_redirect_uri": {
-                "description": "(Optional) The default redirect URI. Must be in the list of callback URLs.",
-                "type": "string",
-                "default": null
-              },
-              "explicit_auth_flows":{
-                "title": "Allowed client auth flows",
-                "description": "List of allowed Auth flows.",
-                "type":"array",
-                "items": {
-                    "type":"string",
-                    "enum": [
-                        "ADMIN_NO_SRP_AUTH", 
-                        "CUSTOM_AUTH_FLOW_ONLY", 
-                        "USER_PASSWORD_AUTH", 
-                        "ALLOW_ADMIN_USER_PASSWORD_AUTH", 
-                        "ALLOW_CUSTOM_AUTH", 
-                        "ALLOW_USER_PASSWORD_AUTH", 
-                        "ALLOW_USER_SRP_AUTH",
-                        "ALLOW_REFRESH_TOKEN_AUTH"
-                          ]
-                      }
-                  },
-                  "logout_urls":{
-                    "type":"array",
-                    "description": "(Optional) List of allowed logout URLs for the identity providers.",
-                    "items": {
-                      "type":"string"
-                    }
-                  },
-                  "refresh_token_validity":{
-                    "description": "(Optional) The time limit in days refresh tokens are valid for.",
-                    "type":"number",
-                    "default":null
-                  },
-                  "prevent_user_existence_errors":{
-                    "description": "(Optional) Choose which errors and responses are returned by Cognito APIs during authentication, account confirmation, and password recovery when the user does not exist in the Cognito User Pool. When set to 'ENABLED' and the user does not exist, authentication returns an error indicating either the username or password was incorrect, and account confirmation and password recovery return a response indicating a code was sent to a simulated destination. When set to 'LEGACY', those APIs will return a 'UserNotFoundException' exception if the user does not exist in the Cognito User Pool.",
-                    "type":"string",
-                    "default":null
-                  },
-                  "supported_identity_providers":{
-                    "description": "(Optional) List of provider names for the identity providers that are supported on this client.",
-                    "type":"array",
-                    "items": {
-                      "type":"string"
-                    }
-                  },
-                  "write_attributes":{
-                    "description": "(Optional) List of Cognito User Pool attributes the application client can write to.",
-                    "type":"array",
-                    "items": {
-                      "type":"string"
-                    }
-                  },
-                  "access_token_validity":{
-                    "description": "(Optional) Time limit, between 5 minutes and 1 day, after which the access token is no longer valid and cannot be used. This value will be overridden if you have entered a value in 'default_client_token_validity_units'.",
-                    "type":"number",
-                    "default":null
-                  },
-                  "did_token_validity":{
-                    "description": "(Optional) Time limit, between 5 minutes and 1 day, after which the ID token is no longer valid and cannot be used. This value will be overridden if you have entered a value in 'default_client_token_validity_units'.",
-                    "type":"number",
-                    "default":null
-                  },
-                  "token_validity_units":{
-                    "type": "array",
-                    "items":{
-                    "type":"object",
-                    "properties": {
-                      "refresh_token": {
-                        "type": "string"
-                      },
-                      "access_token": {
-                        "type": "string"
-                      },
-                      "id_token": {
-                        "type": "string"
-                      }
-                    }
-                    },
-                    "default":null
-                  },
-                  "enable_token_revocation":{
-                    "description": "(Optional) Enables or disables token revocation.",
-                    "type":"boolean",
-                    "default":null
-              
-                  },
-                 
-                "generate_secret": {
-                  "type": "boolean",
-                  "default": "true",
-                  "enum": [
-                    true,
-                    false
-                  ]
-                }
+      }
+    },
+    "clients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "read_attributes": {
+            "type": "string",
+            "enum": [
+              "email",
+              "email_verified",
+              "preferred_username"
+            ]
+          },
+          "allowed_oauth_scopes": {
+            "title": "Allowed client oauth scope",
+            "description": "(Optional) List of allowed OAuth scopes. Possible values are 'phone', 'email', 'openid', 'profile', and 'aws.cognito.signin.user.admin'",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "phone",
+                "emaill",
+                "openid",
+                "profile",
+                "aws.cognito.signin.user.admin"
+              ]
             }
+          },
+          "allowed_oauth_flows": {
+            "title": "Allowed client oauth flows",
+            "description": "(Optional) List of allowed OAuth flows. Possible flows are 'code', 'implicit', and 'client_credentials'.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "code",
+                "implicit",
+                "client_credentials"
+              ]
+            }
+          },
+          "allowed_oauth_flows_user_pool_client": {
+            "type": "boolean",
+            "default": false
+          },
+          "callback_urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "default_redirect_uri": {
+            "description": "(Optional) The default redirect URI. Must be in the list of callback URLs.",
+            "type": "string"
+          },
+          "explicit_auth_flows": {
+            "title": "Allowed client auth flows",
+            "description": "List of allowed Auth flows.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ADMIN_NO_SRP_AUTH",
+                "CUSTOM_AUTH_FLOW_ONLY",
+                "USER_PASSWORD_AUTH",
+                "ALLOW_ADMIN_USER_PASSWORD_AUTH",
+                "ALLOW_CUSTOM_AUTH",
+                "ALLOW_USER_PASSWORD_AUTH",
+                "ALLOW_USER_SRP_AUTH",
+                "ALLOW_REFRESH_TOKEN_AUTH"
+              ]
+            }
+          },
+          "logout_urls": {
+            "type": "array",
+            "description": "(Optional) List of allowed logout URLs for the identity providers.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "refresh_token_validity": {
+            "description": "(Optional) The time limit in days refresh tokens are valid for.",
+            "type": "number"
+          },
+          "prevent_user_existence_errors": {
+            "description": "(Optional) Choose which errors and responses are returned by Cognito APIs during authentication, account confirmation, and password recovery when the user does not exist in the Cognito User Pool. When set to 'ENABLED' and the user does not exist, authentication returns an error indicating either the username or password was incorrect, and account confirmation and password recovery return a response indicating a code was sent to a simulated destination. When set to 'LEGACY', those APIs will return a 'UserNotFoundException' exception if the user does not exist in the Cognito User Pool.",
+            "type": "string"
+          },
+          "supported_identity_providers": {
+            "description": "(Optional) List of provider names for the identity providers that are supported on this client.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "write_attributes": {
+            "description": "(Optional) List of Cognito User Pool attributes the application client can write to.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "access_token_validity": {
+            "description": "(Optional) Time limit, between 5 minutes and 1 day, after which the access token is no longer valid and cannot be used. This value will be overridden if you have entered a value in 'default_client_token_validity_units'.",
+            "type": "number"
+          },
+          "did_token_validity": {
+            "description": "(Optional) Time limit, between 5 minutes and 1 day, after which the ID token is no longer valid and cannot be used. This value will be overridden if you have entered a value in 'default_client_token_validity_units'.",
+            "type": "number"
+          },
+          "token_validity_units": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "refresh_token": {
+                  "type": "string"
+                },
+                "access_token": {
+                  "type": "string"
+                },
+                "id_token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "enable_token_revocation": {
+            "description": "(Optional) Enables or disables token revocation.",
+            "type": "boolean"
+          },
+          "generate_secret": {
+            "type": "boolean",
+            "default": true,
+            "enum": [
+              true,
+              false
+            ]
           }
-        
-      },
-      "domain":{
-        "description": "(Optional) Type a domain prefix to use for the sign-up and sign-in pages that are hosted by Amazon Cognito, e.g. 'https://{YOUR_PREFIX}.auth.eu-west-1.amazoncognito.com'.",
-        "type":"string",
-        "default":""
-
-      },
-      "certificate_arn":{
-        "description": "(Optional) The ARN of an ISSUED ACM certificate in us-east-1 for a custom domain",
-        "type":"string",
-        "default":null
-      },
-   
-   
-    "invite_email_subject":{
+        }
+      }
+    },
+    "domain": {
+      "description": "(Optional) Type a domain prefix to use for the sign-up and sign-in pages that are hosted by Amazon Cognito, e.g. 'https://{YOUR_PREFIX}.auth.eu-west-1.amazoncognito.com'.",
+      "type": "string"
+    },
+    "certificate_arn": {
+      "description": "(Optional) The ARN of an ISSUED ACM certificate in us-east-1 for a custom domain",
+      "type": "string"
+    },
+    "invite_email_subject": {
       "description": "(Optional) The subject for email messages.",
-      "type":"string",
-      "default":null
+      "type": "string"
     },
-    "invite_email_message":{
+    "invite_email_message": {
       "description": "(Optional) The message template for email messages. Must contain {username} and {####} placeholders",
-      "type":"string",
-      "default":"Your username is {username} and your temporary password is '{####}'"
+      "type": "string",
+      "default": "Your username is {username} and your temporary password is '{####}'"
     },
-    "auto_verified_attributes":{
-      "type":"array",
+    "auto_verified_attributes": {
+      "type": "array",
       "description": "(Optional) The attributes to be auto-verified. Possible values: 'email', 'phone_number'.",
       "items": {
-        "type":"string",
+        "type": "string",
         "enum": [
           "email",
           "phone_number"
         ]
       }
     },
-    "account_recovery_mechanisms":{
+    "account_recovery_mechanisms": {
       "type": "array",
       "description": "(Optional) A list of recovery_mechanisms which are defined by a `name` and its `priority`. Valid values for `name` are verified_email, verified_phone_number, and admin_only.",
-      "items": 
-        {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "enum":[
-                "verified_email",
-                "verified_phone_number",
-                "admin_only"
-              ]
-            },
-            "priority": {
-              "type": "integer"
-            }
-          },
-          "required": [
-            "name",
-            "priority"
-          ]
-        },
-        "default":null
-      },
-      "challenge_required_on_new_device":{
-        "type":"boolean",
-        "description": "(Optional) Indicates whether a challenge is required on a new device. Only applicable to a new device.",
-        "default":null
-      },
-      "user_device_tracking":{
-        "type":"string",
-        "description": "(Optional) Configure tracking of user devices. Set to 'OFF' to disable tracking, 'ALWAYS' to track all devices or 'USER_OPT_IN' to only track when user opts in.",
-        "default":"USER_OPT_IN",
-        "enum": [
-          "OFF",
-          "ALWAYS",
-          "USER_OPT_IN"
-        ]
-      },
-      "enable_username_case_sensitivity":{
-        "type":"boolean",
-        "default":null
-      },
-      "email_sending_account":{
-        "description": "(Optional) The email delivery method to use. 'COGNITO_DEFAULT' for the default email functionality built into Cognito or 'DEVELOPER' to use your Amazon SES configuration.",
-        "type":"string",
-        "default":"COGNITO_DEFAULT"
-      },
-      "email_reply_to_address":{
-        "description":"",
-        "type":"string",
-        "default":null
-      },
-      "email_source_arn":{
-        "description": "(Optional) - The ARN of the email source.",
-        "type":"string",
-        "default":null
-      },
-      "email_from_address":{
-        "description": "(Optional) - Senders email address or senders name with their email address",
-        "type":"string",
-        "default":null
-      },
-      "mfa_configuration":{
-        "description": "Multi-Factor Authentication (MFA) configuration for the User Pool. Valid values: 'ON', 'OFF' or 'OPTIONAL'. 'ON' and 'OPTIONAL' require at least one of 'sms_configuration' or 'software_token_mfa_configuration' to be configured.",
-        "type":"string",
-        "enum": [
-          "ON",
-          "OFF",
-          "OPTIONAL"
-        ],
-        "default":null
-        
-      },
-      "sms_authentication_message":{
-        "description" : "(Optional) A string representing the SMS authentication message. The message must contain the {####} placeholder, which will be replaced with the authentication code.",
-        "type":"string",
-        "default":null
-
-      },
-      "lambda_create_auth_challenge":{
-        "description": "(Optional) The ARN of an AWS Lambda creating an authentication challenge.",
-        "type":"string",
-        "default":null
-      },
-      "lambda_custom_message":{
-        "description": "(Optional) The ARN of a custom message AWS Lambda trigger.",
-        "type":"string",
-        "default":null
-      },
-      "lambda_define_auth_challenge":{
-        "description": "(Optional) The ARN of an AWS Lambda that defines the authentication challenge.",
-        "type":"string",
-        "default":null
-      },
-      "lambda_post_authentication":{
-        "description": "(Optional) The ARN of a post-authentication AWS Lambda trigger.",
-        "type":"string",
-        "default":null
-      },
-      "lambda_post_confirmation":{
-        "description": "(Optional) The ARN of a post-confirmation AWS Lambda trigger.",
-        "type":"string",
-        "default":null
-      },
-      "lambda_pre_authentication":{
-        "description": "(Optional) The ARN of a pre-authentication AWS Lambda trigger.",
-        "type":"string",
-        "default":null
-      },
-      "lambda_pre_sign_up":{
-        "description": "(Optional) The ARN of a pre-registration AWS Lambda trigger.",
-        "type":"string",
-        "default":null
-      },
-      "lambda_pre_token_generation":{
-        "description": "(Optional) The ARN of an AWS Lambda that allows customization of identity token claims before token generation.",
-        "type":"string",
-        "default":null
-      },
-      "lambda_user_migration":{
-        "description": "(Optional) The ARN of the user migration AWS Lambda config type.",
-        "type":"string",
-        "default":null
-      },
-      "lambda_verify_auth_challenge_response":{
-        "description": "(Optional) The ARN of an AWS Lambda that verifies the authentication challenge response.",
-        "type":"string",
-        "default":null
-      },
-      "schema_attributes":{
-        "description": "(Optional) A list of schema attributes of a user pool. You can add a maximum of 25 custom attributes.",
-        "type":"array",
-        "items": {
-          "type":"object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "attribute_data_type": {
-              "type": "string"
-            },
-            "developer_only_attribute": {
-              "type": "boolean"
-            },
-            "mutable": {
-              "type": "boolean"
-            },
-            "required": {
-              "type": "boolean"
-            },
-            "min_length": {
-              "type": "integer"
-            },
-            "max_length": {
-              "type": "integer"
-            }
-          }
-        },
-        "default":null
-      },
-      "sms_configuration":{
-        "type":"object",
+      "items": {
+        "type": "object",
         "properties": {
-          "external_id":{
-            "type":"string"
+          "name": {
+            "type": "string",
+            "enum": [
+              "verified_email",
+              "verified_phone_number",
+              "admin_only"
+            ]
           },
-          "sms_caller_arn":{
-            "type":"string"
+          "priority": {
+            "type": "integer"
           }
         },
-        "default":null
-      },
-      "default_email_option":{
-        "description": "(Optional) The default email option. Must be either `CONFIRM_WITH_CODE` or `CONFIRM_WITH_LINK`.",
-        "type":"string",
-        "enum": [
-          "CONFIRM_WITHCODE",
-          "CONFIRM_WITH_LINK"
-        ],
-        "default":"CONFIRM_WTH_CODE"
-      },
-      "email_message":{
-        "description": "(Optional) The email message template. Must contain the {####} placeholder.",
-        "type":"string",
-        "default":"Your verification code is {####}."
-      },
-      "email_message_by_link":{
-        "description": "(Optional) The email message template for sending a confirmation link to the user, it must contain the {##Any Text##} placeholder.",
-        "type":"string",
-        "default":"Please click the link below to verify your email address. {##Verify Email##}."
-      },
-      "email_subject":{
-        "description": "(Optional) The subject line for the email message template.",
-        "type":"string",
-        "default":"Your Verification Code"
-      },
-      "email_subject_by_link":{
-        "description" : "(Optional) The subject line for the email message template for sending a confirmation link to the user.",
-        "type":"string",
-        "default":"Your Verification Link"
-      },
-      "sms_message":{
-        "description": "(Optional) The SMS message template. Must contain the {####} placeholder, which will be replaced with the verification code. Can also contain the {username} placeholder which will be replaced with the username.",
-        "type":"string",
-        "default":"Your verification code is {####}."
+        "required": [
+          "name",
+          "priority"
+        ]
       }
+    },
+    "challenge_required_on_new_device": {
+      "type": "boolean",
+      "description": "(Optional) Indicates whether a challenge is required on a new device. Only applicable to a new device.",
+      "default": false,
+      "enum": [
+        true,
+        false
+      ]
+    },
+    "user_device_tracking": {
+      "type": "string",
+      "description": "(Optional) Configure tracking of user devices. Set to 'OFF' to disable tracking, 'ALWAYS' to track all devices or 'USER_OPT_IN' to only track when user opts in.",
+      "default": "USER_OPT_IN",
+      "enum": [
+        "OFF",
+        "ALWAYS",
+        "USER_OPT_IN"
+      ]
+    },
+    "enable_username_case_sensitivity": {
+      "type": "boolean",
+      "enum": [
+        true,
+        false
+      ]
+    },
+    "email_sending_account": {
+      "description": "(Optional) The email delivery method to use. 'COGNITO_DEFAULT' for the default email functionality built into Cognito or 'DEVELOPER' to use your Amazon SES configuration.",
+      "type": "string",
+      "default": "COGNITO_DEFAULT"
+    },
+    "email_reply_to_address": {
+      "description": "",
+      "type": "string"
+    },
+    "email_source_arn": {
+      "description": "(Optional) - The ARN of the email source.",
+      "type": "string"
+    },
+    "email_from_address": {
+      "description": "(Optional) - Senders email address or senders name with their email address",
+      "type": "string"
+    },
+    "mfa_configuration": {
+      "description": "Multi-Factor Authentication (MFA) configuration for the User Pool. Valid values: 'ON', 'OFF' or 'OPTIONAL'. 'ON' and 'OPTIONAL' require at least one of 'sms_configuration' or 'software_token_mfa_configuration' to be configured.",
+      "type": "string",
+      "enum": [
+        "ON",
+        "OFF",
+        "OPTIONAL"
+      ]
+    },
+    "sms_authentication_message": {
+      "description": "(Optional) A string representing the SMS authentication message. The message must contain the {####} placeholder, which will be replaced with the authentication code.",
+      "type": "string"
+    },
+    "lambda_create_auth_challenge": {
+      "description": "(Optional) The ARN of an AWS Lambda creating an authentication challenge.",
+      "type": "string"
+    },
+    "lambda_custom_message": {
+      "description": "(Optional) The ARN of a custom message AWS Lambda trigger.",
+      "type": "string"
+    },
+    "lambda_define_auth_challenge": {
+      "description": "(Optional) The ARN of an AWS Lambda that defines the authentication challenge.",
+      "type": "string"
+    },
+    "lambda_post_authentication": {
+      "description": "(Optional) The ARN of a post-authentication AWS Lambda trigger.",
+      "type": "string"
+    },
+    "lambda_post_confirmation": {
+      "description": "(Optional) The ARN of a post-confirmation AWS Lambda trigger.",
+      "type": "string"
+    },
+    "lambda_pre_authentication": {
+      "description": "(Optional) The ARN of a pre-authentication AWS Lambda trigger.",
+      "type": "string"
+    },
+    "lambda_pre_sign_up": {
+      "description": "(Optional) The ARN of a pre-registration AWS Lambda trigger.",
+      "type": "string"
+    },
+    "lambda_pre_token_generation": {
+      "description": "(Optional) The ARN of an AWS Lambda that allows customization of identity token claims before token generation.",
+      "type": "string"
+    },
+    "lambda_user_migration": {
+      "description": "(Optional) The ARN of the user migration AWS Lambda config type.",
+      "type": "string"
+    },
+    "lambda_verify_auth_challenge_response": {
+      "description": "(Optional) The ARN of an AWS Lambda that verifies the authentication challenge response.",
+      "type": "string"
+    },
+    "schema_attributes": {
+      "description": "(Optional) A list of schema attributes of a user pool. You can add a maximum of 25 custom attributes.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "attribute_data_type": {
+            "type": "string"
+          },
+          "developer_only_attribute": {
+            "type": "boolean"
+          },
+          "mutable": {
+            "type": "boolean"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "min_length": {
+            "type": "integer"
+          },
+          "max_length": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "sms_configuration": {
+      "type": "object",
+      "properties": {
+        "external_id": {
+          "type": "string"
+        },
+        "sms_caller_arn": {
+          "type": "string"
+        }
+      }
+    },
+    "default_email_option": {
+      "description": "(Optional) The default email option. Must be either `CONFIRM_WITH_CODE` or `CONFIRM_WITH_LINK`.",
+      "type": "string",
+      "enum": [
+        "CONFIRM_WITH_CODE",
+        "CONFIRM_WITH_LINK"
+      ],
+      "default": "CONFIRM_WITH_CODE"
+    },
+    "email_message": {
+      "description": "(Optional) The email message template. Must contain the {####} placeholder.",
+      "type": "string",
+      "default": "Your verification code is {####}."
+    },
+    "email_message_by_link": {
+      "description": "(Optional) The email message template for sending a confirmation link to the user, it must contain the {##Any Text##} placeholder.",
+      "type": "string",
+      "default": "Please click the link below to verify your email address. {##Verify Email##}."
+    },
+    "email_subject": {
+      "description": "(Optional) The subject line for the email message template.",
+      "type": "string",
+      "default": "Your Verification Code"
+    },
+    "email_subject_by_link": {
+      "description": "(Optional) The subject line for the email message template for sending a confirmation link to the user.",
+      "type": "string",
+      "default": "Your Verification Link"
+    },
+    "sms_message": {
+      "description": "(Optional) The SMS message template. Must contain the {####} placeholder, which will be replaced with the verification code. Can also contain the {username} placeholder which will be replaced with the username.",
+      "type": "string",
+      "default": "Your verification code is {####}."
     }
   }
+}
